@@ -6,12 +6,12 @@ import { FiGithub, FiExternalLink } from 'react-icons/fi';
 const projects = [
   {
     id: 1,
-    title: 'E-Commerce Platform',
-    subtitle: 'Fans & ACs with Admin + Rider App',
+    title: 'DevMate AI',
+    subtitle: 'Full-Stack GitHub Repository Analyzer SaaS',
     description:
-      'Full-stack e-commerce solution with product catalog, cart & checkout, admin dashboard (orders/inventory), and a dedicated rider delivery app with real-time order tracking.',
-    image: '/ecommerce.png',
-    tags: ['React', 'Node.js', 'MongoDB', 'Express', 'REST API', 'JWT', 'Redux'],
+      'Production-grade SaaS platform that analyzes GitHub repositories using ML (issue difficulty classifier, repo type clustering, PR merge predictor) and Claude AI for natural-language codebase explanations. Features a personalized recommendation engine, analytics dashboard, and Google OAuth 2.0 authentication.',
+    image: '/taskboard.png',
+    tags: ['React 18', 'TypeScript', 'FastAPI', 'Python', 'scikit-learn', 'XGBoost', 'PostgreSQL', 'Docker', 'Claude AI', 'Google OAuth 2.0'],
     github: 'https://github.com/ManojLamani',
     demo: '#',
     gradient: 'from-purple-600 to-pink-500',
@@ -20,44 +20,30 @@ const projects = [
   },
   {
     id: 2,
-    title: 'Learning Pathway',
-    subtitle: 'Full-Stack LMS Platform',
+    title: 'TaskForge',
+    subtitle: 'Multi-Tenant Project Management SaaS',
     description:
-      'A full-stack Learning Management System with role-based access (student/instructor/admin), modular courses, quizzes, assignments, grading workflows, progress tracking, and instructor dashboards.',
-    image: '/learningpathway.png',
-    tags: ['Django', 'Python', 'PostgreSQL', 'HTML/CSS', 'REST API', 'Role-Based Auth'],
-    github: 'https://github.com/ManojLamani/Learning-Pathway',
-    demo: '#',
-    gradient: 'from-green-600 to-teal-500',
-    accent: 'rgba(16,185,129,0.3)',
-    featured: true,
-  },
-  {
-    id: 3,
-    title: 'Personal Management Dashboard',
-    subtitle: 'Tasks · Notes · Goals',
-    description:
-      'A clean personal productivity dashboard to manage Tasks, Notes, and Goals. Features simple input forms, section-based navigation, and an intuitive UI designed for efficient daily planning.',
-    image: '/dashboard.png',
-    tags: ['HTML', 'CSS', 'JavaScript', 'Local Storage', 'Responsive UI'],
-    github: 'https://github.com/ManojLamani/PERSONAL-MANAGEMENT-DASHBOARD',
-    demo: '#',
-    gradient: 'from-indigo-600 to-blue-500',
-    accent: 'rgba(99,102,241,0.3)',
-    featured: true,
-  },
-  {
-    id: 4,
-    title: 'TaskBoard Pro',
-    subtitle: 'Project Collaboration Tool',
-    description:
-      'A multi-tenant SaaS project management platform, team collaboration, real-time updates, role-based access control, and detailed activity audit logs.',
-    image: '/taskboard.png',
-    tags: ['React', 'Node.js', 'MongoDB', 'Express', 'Google OAuth', 'Framer Motion'],
+      'Full-stack project management SaaS built with the MERN stack. Supports multi-tenant architecture with secure data isolation, JWT authentication, bcrypt password hashing, and granular role-based access control (Owner/Manager/Member) enforced across all API operations.',
+    image: '/ecommerce.png',
+    tags: ['React.js', 'Vite', 'Node.js', 'Express.js', 'MongoDB', 'Mongoose', 'JWT', 'bcrypt'],
     github: 'https://github.com/ManojLamani/Multi-Tenant-Project-Management-SaaS',
     demo: '#',
     gradient: 'from-cyan-600 to-blue-500',
     accent: 'rgba(6,182,212,0.3)',
+    featured: true,
+  },
+  {
+    id: 3,
+    title: 'Learning Pathway',
+    subtitle: 'Full-Stack Learning Management System',
+    description:
+      'Full-stack LMS with role-based access for students and instructors. Supports modular course creation, quizzes, assignments, grading workflows, progress tracking, and intuitive instructor dashboards focused on learning outcomes.',
+    image: '/learningpathway.png',
+    tags: ['Django', 'Python', 'PostgreSQL', 'REST API', 'Role-Based Auth'],
+    github: 'https://github.com/ManojLamani/Learning-Pathway',
+    demo: '#',
+    gradient: 'from-green-600 to-teal-500',
+    accent: 'rgba(16,185,129,0.3)',
     featured: true,
   },
 ];
@@ -208,12 +194,12 @@ export default function Projects() {
           </h2>
           <div className="section-divider" />
           <p className="text-gray-400 max-w-xl mx-auto mt-6">
-            A showcase of my most impactful work — from collaborative platforms to full-stack e-commerce solutions.
+            A showcase of my most impactful work — from AI-powered SaaS platforms to full-stack management systems.
           </p>
         </motion.div>
 
         {/* Project Grid */}
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {projects.map((project, index) => (
             <ProjectCard key={project.id} project={project} index={index} />
           ))}
