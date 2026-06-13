@@ -12,7 +12,7 @@ const skills = [
 ];
 
 const stats = [
-  { value: '2nd', label: 'Year Student', suffix: '' },
+  { value: '3rd', label: 'Year Student', suffix: '' },
   { value: '4+', label: 'Projects Built', suffix: '' },
   { value: '10+', label: 'Technologies', suffix: '' },
   { value: '100%', label: 'Passion', suffix: '' },
@@ -66,7 +66,7 @@ export default function About() {
               </motion.div>
 
               <motion.p variants={itemVariants} className="text-gray-400 leading-relaxed mb-4 text-lg">
-                I'm a <span className="text-blue-400 font-medium">2nd-year Computer Science (AI/ML)</span> student
+                I'm a <span className="text-blue-400 font-medium">3rd-year Computer Science (AI/ML)</span> student
                 with a deep passion for building full-stack web applications and exploring machine learning.
               </motion.p>
               <motion.p variants={itemVariants} className="text-gray-400 leading-relaxed mb-4">
