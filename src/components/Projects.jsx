@@ -12,7 +12,7 @@ const projects = [
       'Production-grade SaaS platform that analyzes GitHub repositories using ML (issue difficulty classifier, repo type clustering, PR merge predictor) and Claude AI for natural-language codebase explanations. Features a personalized recommendation engine, analytics dashboard, and Google OAuth 2.0 authentication.',
     image: '/taskboard.png',
     tags: ['React 18', 'TypeScript', 'FastAPI', 'Python', 'scikit-learn', 'XGBoost', 'PostgreSQL', 'Docker', 'Claude AI', 'Google OAuth 2.0'],
-    github: 'https://github.com/ManojLamani',
+    github: 'https://github.com/ManojLamani/DEVMATE_AI',
     demo: '#',
     gradient: 'from-purple-600 to-pink-500',
     accent: 'rgba(168,85,247,0.3)',
