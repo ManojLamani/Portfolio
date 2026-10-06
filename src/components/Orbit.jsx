@@ -5,9 +5,12 @@ import { profile } from '../data/portfolio';
 const inner = ['React', 'TypeScript', 'Node.js', 'Python', 'PostgreSQL'];
 const outer = ['FastAPI', 'Docker', 'scikit-learn', 'Hugging Face', 'MongoDB', 'Google Gemini', 'Go'];
 
+// Rings pause while the orbit is hovered so the icons are easy to click.
+const pause = 'group-hover/orbit:[animation-play-state:paused]';
+
 function Ring({ items, radius, spin, counter, size }) {
   return (
-    <div className={`absolute inset-0 ${spin}`}>
+    <div className={`pointer-events-none absolute inset-0 ${spin} ${pause}`}>
       {items.map((name, i) => {
         const angle = (i / items.length) * Math.PI * 2;
         const x = Math.cos(angle) * radius;
@@ -18,14 +21,18 @@ function Ring({ items, radius, spin, counter, size }) {
             className="absolute -translate-x-1/2 -translate-y-1/2"
             style={{ left: `${50 + x}%`, top: `${50 + y}%` }}
           >
-            <div className={counter}>
-              <div
-                title={name}
-                className="grid place-items-center rounded-2xl border border-white/10 bg-ink-800/90 shadow-lg shadow-black/40 backdrop-blur transition-transform duration-300 hover:scale-125"
+            <div className={`${counter} ${pause}`}>
+              <a
+                href="#stack"
+                aria-label={`${name} — view tech stack`}
+                className="group/icon pointer-events-auto relative grid place-items-center rounded-2xl border border-white/10 bg-ink-800/90 shadow-lg shadow-black/40 backdrop-blur transition-all duration-300 hover:scale-125 hover:border-mint/40"
                 style={{ width: size, height: size }}
               >
                 <TechIcon name={name} size={size * 0.45} />
-              </div>
+                <span className="pointer-events-none absolute left-1/2 top-full mt-2 -translate-x-1/2 whitespace-nowrap rounded-md border border-white/10 bg-ink-900/95 px-2 py-1 text-[11px] text-fg opacity-0 transition-opacity duration-200 group-hover/icon:opacity-100">
+                  {name}
+                </span>
+              </a>
             </div>
           </div>
         );
@@ -40,21 +47,25 @@ export default function Orbit() {
       initial={{ opacity: 0, scale: 0.85, rotate: -10 }}
       animate={{ opacity: 1, scale: 1, rotate: 0 }}
       transition={{ duration: 1.2, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-      className="relative mx-auto aspect-square w-full max-w-[460px]"
-      aria-hidden="true"
+      className="group/orbit relative mx-auto aspect-square w-full max-w-[460px]"
     >
       {/* rings */}
       <div className="absolute inset-[20%] rounded-full border border-dashed border-white/10" />
       <div className="absolute inset-[4%] rounded-full border border-white/[0.07]" />
-      <div className="absolute inset-[6%] rounded-full bg-[conic-gradient(from_0deg,transparent,rgba(110,242,196,0.15),transparent_30%)] animate-orbit" />
+      <div className={`absolute inset-[6%] rounded-full bg-[conic-gradient(from_0deg,transparent,rgba(110,242,196,0.15),transparent_30%)] animate-orbit ${pause}`} />
 
       {/* core */}
-      <div className="absolute inset-[34%] grid place-items-center">
-        <div className="absolute inset-0 animate-pulse rounded-full bg-mint/20 blur-2xl" />
-        <div className="relative grid h-full w-full place-items-center rounded-full border border-white/15 bg-gradient-to-br from-ink-700 to-ink-900 shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]">
-          <span className="text-gradient font-display text-4xl font-bold sm:text-5xl">{profile.initials}</span>
+      <a href="#stack" aria-label="View my tech stack" className="group/core absolute inset-[34%] grid place-items-center">
+        <div className="absolute inset-0 animate-pulse rounded-full bg-mint/20 blur-2xl transition-colors group-hover/core:bg-mint/35" />
+        <div className="relative grid h-full w-full place-items-center rounded-full border border-white/15 bg-gradient-to-br from-ink-700 to-ink-900 shadow-[inset_0_1px_0_rgba(255,255,255,0.1)] transition-all duration-300 group-hover/core:scale-105 group-hover/core:border-mint/40">
+          <span className="text-gradient font-display text-4xl font-bold transition-opacity duration-300 group-hover/core:opacity-0 sm:text-5xl">
+            {profile.initials}
+          </span>
+          <span className="absolute font-mono text-xs uppercase tracking-widest text-mint opacity-0 transition-opacity duration-300 group-hover/core:opacity-100">
+            Tech stack ↓
+          </span>
         </div>
-      </div>
+      </a>
 
       <Ring items={inner} radius={30} spin="animate-orbit" counter="animate-orbit-reverse" size={46} />
       <Ring items={outer} radius={46} spin="animate-orbit-reverse-slow" counter="animate-orbit-slow" size={52} />
