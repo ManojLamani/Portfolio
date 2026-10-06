@@ -1,151 +1,139 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Link } from 'react-scroll';
-import { FiSun, FiMoon, FiMenu, FiX } from 'react-icons/fi';
+import { useEffect, useState } from 'react';
+import { AnimatePresence, motion, useMotionValueEvent, useScroll } from 'framer-motion';
+import { FiArrowUpRight, FiMenu, FiX } from 'react-icons/fi';
+import { navLinks, profile } from '../data/portfolio';
+import { EASE } from './ui/motion';
 
-const navLinks = [
-  { label: 'Home', to: 'hero' },
-  { label: 'About', to: 'about' },
-  { label: 'Projects', to: 'projects' },
-  { label: 'Skills', to: 'skills' },
-  { label: 'Contact', to: 'contact' },
-];
-
-export default function Navbar({ darkMode, setDarkMode }) {
-  const [scrolled, setScrolled] = useState(false);
-  const [activeSection, setActiveSection] = useState('hero');
-  const [mobileOpen, setMobileOpen] = useState(false);
+function useActiveSection(ids) {
+  const [active, setActive] = useState(null);
 
   useEffect(() => {
-    const onScroll = () => {
-      setScrolled(window.scrollY > 50);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActive(entry.target.id);
+        });
+      },
+      { rootMargin: '-45% 0px -50% 0px' },
+    );
+    ids.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
+  }, [ids]);
 
-      const sections = navLinks.map(l => l.to);
-      for (let i = sections.length - 1; i >= 0; i--) {
-        const el = document.getElementById(sections[i]);
-        if (el && window.scrollY >= el.offsetTop - 120) {
-          setActiveSection(sections[i]);
-          break;
-        }
-      }
+  return active;
+}
+
+const sectionIds = ['home', ...navLinks.map((l) => l.id)];
+
+export default function Navbar() {
+  const active = useActiveSection(sectionIds);
+  const [open, setOpen] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const { scrollY } = useScroll();
+
+  useMotionValueEvent(scrollY, 'change', (y) => {
+    const prev = scrollY.getPrevious() ?? 0;
+    setScrolled(y > 24);
+    setHidden(y > prev && y > 400 && !open);
+  });
+
+  useEffect(() => {
+    document.body.style.overflow = open ? 'hidden' : '';
+    return () => {
+      document.body.style.overflow = '';
     };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+  }, [open]);
 
   return (
     <>
       <motion.header
-        initial={{ y: -100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6, ease: 'easeOut' }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          scrolled
-            ? 'glass border-b border-blue-500/10 shadow-[0_4px_30px_rgba(59,130,246,0.08)]'
-            : 'bg-transparent border-b border-transparent'
-        }`}
+        initial={{ y: -80, opacity: 0 }}
+        animate={{ y: hidden ? -100 : 0, opacity: 1 }}
+        transition={{ duration: 0.45, ease: EASE }}
+        className="fixed inset-x-0 top-0 z-50 px-4 pt-4"
       >
-        <nav className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          {/* Logo */}
-          <Link to="hero" smooth duration={800}>
-            <motion.div
-              className="flex items-center gap-2"
-              whileHover={{ scale: 1.05 }}
-            >
-              <div className="w-8 h-8 rounded-lg bg-neon-gradient flex items-center justify-center text-white font-bold text-sm">
-                M
-              </div>
-              <span className="font-bold text-xl neon-text">Manoj</span>
-            </motion.div>
-          </Link>
+        <nav
+          className={`mx-auto flex max-w-5xl items-center justify-between rounded-full border px-3 py-2 transition-all duration-300 ${
+            scrolled ? 'border-white/10 bg-ink-900/75 shadow-2xl shadow-black/40 backdrop-blur-xl' : 'border-transparent bg-transparent'
+          }`}
+        >
+          <a href="#home" className="group flex items-center gap-2.5 rounded-full pl-1 pr-3" aria-label="Back to top">
+            <span className="relative grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-mint to-iris font-display text-sm font-bold text-ink-950 transition-transform duration-500 group-hover:rotate-[360deg]">
+              {profile.initials}
+            </span>
+            <span className="hidden font-display text-sm font-semibold tracking-tight sm:block">{profile.shortName} Lamani</span>
+          </a>
 
-          {/* Desktop Nav Links */}
-          <div className="hidden md:flex items-center gap-8">
+          <ul className="hidden items-center gap-1 md:flex">
             {navLinks.map((link) => (
-              <Link
-                key={link.to}
-                to={link.to}
-                smooth
-                duration={800}
-                offset={-80}
-                className={`nav-link ${activeSection === link.to ? 'active' : ''}`}
-              >
-                {link.label}
-              </Link>
+              <li key={link.id} className="relative">
+                <a
+                  href={`#${link.id}`}
+                  className={`relative z-10 block rounded-full px-4 py-2 text-sm transition-colors ${
+                    active === link.id ? 'text-fg' : 'text-fg-muted hover:text-fg'
+                  }`}
+                >
+                  {link.label}
+                </a>
+                {active === link.id && (
+                  <motion.span
+                    layoutId="nav-pill"
+                    className="absolute inset-0 rounded-full border border-white/10 bg-white/[0.06]"
+                    transition={{ type: 'spring', stiffness: 380, damping: 32 }}
+                  />
+                )}
+              </li>
             ))}
-          </div>
+          </ul>
 
-          {/* Right Side Controls */}
-          <div className="flex items-center gap-3">
-            {/* Theme Toggle */}
-            <motion.button
-              whileHover={{ scale: 1.1, rotate: 15 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => setDarkMode(!darkMode)}
-              className="w-9 h-9 rounded-full glass flex items-center justify-center text-gray-400 hover:text-white transition-colors duration-200 border border-blue-500/20"
-              aria-label="Toggle theme"
+          <div className="flex items-center gap-2">
+            <a href="#contact" className="btn-primary hidden !py-2 sm:inline-flex">
+              Let&apos;s talk <FiArrowUpRight />
+            </a>
+            <button
+              type="button"
+              onClick={() => setOpen((v) => !v)}
+              className="grid h-10 w-10 place-items-center rounded-full border border-white/10 bg-white/[0.04] md:hidden"
+              aria-label={open ? 'Close menu' : 'Open menu'}
+              aria-expanded={open}
             >
-              {darkMode ? <FiSun size={16} /> : <FiMoon size={16} />}
-            </motion.button>
-
-            {/* Resume Button - Desktop */}
-            <motion.a
-              href="#contact"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="hidden md:block btn-primary text-sm py-2 px-5"
-            >
-              Hire Me
-            </motion.a>
-
-            {/* Mobile Menu Toggle */}
-            <motion.button
-              whileTap={{ scale: 0.9 }}
-              onClick={() => setMobileOpen(!mobileOpen)}
-              className="md:hidden w-9 h-9 rounded-full glass flex items-center justify-center text-gray-400 hover:text-white border border-blue-500/20"
-            >
-              {mobileOpen ? <FiX size={16} /> : <FiMenu size={16} />}
-            </motion.button>
+              {open ? <FiX size={18} /> : <FiMenu size={18} />}
+            </button>
           </div>
         </nav>
       </motion.header>
 
-      {/* Mobile Menu */}
       <AnimatePresence>
-        {mobileOpen && (
+        {open && (
           <motion.div
-            initial={{ opacity: 0, x: '100%' }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: '100%' }}
-            transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className="fixed top-0 right-0 bottom-0 w-72 z-40 glass border-l border-blue-500/20 flex flex-col pt-20 px-8"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-40 bg-ink-950/90 backdrop-blur-xl md:hidden"
+            onClick={() => setOpen(false)}
           >
-            <div className="flex flex-col gap-6">
+            <motion.ul
+              className="flex h-full flex-col justify-center gap-2 px-8"
+              initial="hidden"
+              animate="show"
+              variants={{ show: { transition: { staggerChildren: 0.06, delayChildren: 0.1 } } }}
+            >
               {navLinks.map((link, i) => (
-                <motion.div
-                  key={link.to}
-                  initial={{ opacity: 0, x: 30 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.08 }}
+                <motion.li
+                  key={link.id}
+                  variants={{ hidden: { opacity: 0, x: -24 }, show: { opacity: 1, x: 0, transition: { ease: EASE, duration: 0.5 } } }}
                 >
-                  <Link
-                    to={link.to}
-                    smooth
-                    duration={800}
-                    offset={-80}
-                    onClick={() => setMobileOpen(false)}
-                    className={`nav-link text-lg ${activeSection === link.to ? 'active' : ''}`}
-                  >
+                  <a href={`#${link.id}`} className="flex items-baseline gap-4 py-2 font-display text-4xl font-semibold">
+                    <span className="font-mono text-sm text-mint">0{i + 1}</span>
                     {link.label}
-                  </Link>
-                </motion.div>
+                  </a>
+                </motion.li>
               ))}
-            </div>
-            <div className="mt-8">
-              <a href="mailto:manojlamani4996@gmail.com" className="btn-primary w-full justify-center">
-                Hire Me
-              </a>
-            </div>
+            </motion.ul>
           </motion.div>
         )}
       </AnimatePresence>
