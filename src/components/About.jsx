@@ -1,149 +1,100 @@
-import { motion, useInView } from 'framer-motion';
-import { useRef } from 'react';
-import { FiCode, FiCpu, FiDatabase, FiGlobe, FiAward, FiBookOpen } from 'react-icons/fi';
+import { motion } from 'framer-motion';
+import { FiAward, FiBookOpen, FiCheck, FiCompass } from 'react-icons/fi';
+import { achievements, education, profile } from '../data/portfolio';
+import SectionHeading from './ui/SectionHeading';
+import Spotlight from './ui/Spotlight';
+import { Reveal } from './ui/Reveal';
+import { fadeUp, stagger } from './ui/motion';
 
-const skills = [
-  { icon: FiCode, label: 'Full Stack Developer', color: 'from-blue-500 to-cyan-400' },
-  { icon: FiCpu, label: 'AI/ML Engineer', color: 'from-purple-500 to-pink-400' },
-  { icon: FiDatabase, label: 'Database Design', color: 'from-blue-600 to-indigo-400' },
-  { icon: FiGlobe, label: 'REST APIs', color: 'from-cyan-500 to-blue-400' },
-  { icon: FiAward, label: 'Java Developer', color: 'from-orange-500 to-yellow-400' },
-  { icon: FiBookOpen, label: 'AIML Student', color: 'from-green-500 to-emerald-400' },
-];
-
-const stats = [
-  { value: '3rd', label: 'Year Student', suffix: '' },
-  { value: '4+', label: 'Projects Built', suffix: '' },
-  { value: '10+', label: 'Technologies', suffix: '' },
-  { value: '100%', label: 'Passion', suffix: '' },
-];
+const focus = ['Retrieval-Augmented Generation', 'Agentic workflows (LangGraph)', 'System design', 'Cloud-native Go'];
 
 export default function About() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1, transition: { staggerChildren: 0.12 } }
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } }
-  };
-
   return (
-    <section id="about" className="section-padding relative bg-dark-800 overflow-hidden">
-      {/* Background Decoration */}
-      <div className="absolute top-0 right-0 w-1/2 h-full bg-mesh opacity-50 pointer-events-none" />
+    <section id="about" className="section">
+      <div className="container-x">
+        <SectionHeading index="01" eyebrow="About" title="Engineer who ships the" accent="whole stack.">
+          From database schema to model evaluation to the pixel on screen.
+        </SectionHeading>
 
-      <div className="max-w-7xl mx-auto px-6" ref={ref}>
-        <motion.div
-          initial="hidden"
-          animate={isInView ? 'visible' : 'hidden'}
-          variants={containerVariants}
-        >
-          {/* Section Header */}
-          <motion.div variants={itemVariants} className="text-center mb-16">
-            <p className="text-blue-400 font-mono text-sm tracking-widest uppercase mb-3">Get to know me</p>
-            <h2 className="section-title text-white">
-              About <span className="neon-text">Me</span>
-            </h2>
-            <div className="section-divider" />
-          </motion.div>
-
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            {/* Left - Text Content */}
-            <div>
-              <motion.div variants={itemVariants} className="mb-6">
-                <span className="inline-block glass border border-blue-500/25 text-blue-400 text-xs font-mono px-4 py-1.5 rounded-full mb-4">
-                  {'<developer />'}
-                </span>
-                <h3 className="text-3xl font-bold text-white mb-4">
-                  Passionate about building
-                  <span className="neon-text block">intelligent solutions</span>
-                </h3>
-              </motion.div>
-
-              <motion.p variants={itemVariants} className="text-gray-400 leading-relaxed mb-4 text-lg">
-                I'm a <span className="text-blue-400 font-medium">3rd-year Computer Science (AI/ML)</span> student
-                with a deep passion for building full-stack web applications and exploring machine learning.
-              </motion.p>
-              <motion.p variants={itemVariants} className="text-gray-400 leading-relaxed mb-4">
-                My journey in tech has led me to master the <span className="text-purple-400 font-medium">MERN Stack</span>,
-                develop robust <span className="text-cyan-400 font-medium">REST APIs</span>, and build scalable backend systems
-                with <span className="text-blue-400 font-medium">Java</span>.
-              </motion.p>
-              <motion.p variants={itemVariants} className="text-gray-400 leading-relaxed mb-8">
-                I believe in writing clean, efficient code and creating user experiences that are both
-                beautiful and functional. Currently seeking opportunities to apply my skills in real-world projects
-                and continue growing as a developer.
-              </motion.p>
-
-              {/* Core Skills Tags */}
-              <motion.div variants={itemVariants} className="flex flex-wrap gap-2 mb-8">
-                {['Java', 'JavaScript', 'React', 'Node.js', 'MongoDB', 'REST APIs', 'Express.js', 'Python', 'Git'].map(skill => (
-                  <span key={skill} className="tag">{skill}</span>
+        <div className="grid gap-5 lg:grid-cols-12">
+          {/* Story */}
+          <Reveal className="lg:col-span-7">
+            <Spotlight className="h-full p-7 sm:p-9">
+              <div className="space-y-5 text-[15px] leading-relaxed text-fg-muted sm:text-base">
+                {profile.about.map((p) => (
+                  <p key={p.slice(0, 20)}>{p}</p>
                 ))}
-              </motion.div>
+              </div>
+              <div className="mt-8 border-t border-white/[0.06] pt-6">
+                <p className="mb-3 flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-fg-dim">
+                  <FiCompass className="text-mint" /> Currently exploring
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {focus.map((f) => (
+                    <span key={f} className="chip">
+                      {f}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </Spotlight>
+          </Reveal>
 
-              {/* Stats */}
-              <motion.div variants={itemVariants} className="grid grid-cols-4 gap-4">
-                {stats.map(({ value, label }) => (
-                  <div key={label} className="text-center glass-card p-3">
-                    <div className="text-2xl font-bold neon-text">{value}</div>
-                    <div className="text-gray-500 text-xs mt-1">{label}</div>
-                  </div>
-                ))}
-              </motion.div>
-            </div>
+          {/* Education */}
+          <Reveal delay={0.1} className="lg:col-span-5">
+            <Spotlight className="flex h-full flex-col overflow-hidden p-7 sm:p-9">
+              <div className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-iris/20 blur-3xl" />
+              <div className="grid h-12 w-12 place-items-center rounded-xl border border-white/10 bg-ink-700">
+                <FiBookOpen className="text-iris" size={20} />
+              </div>
+              <p className="mt-6 font-mono text-xs uppercase tracking-widest text-fg-dim">Education</p>
+              <h3 className="mt-2 font-display text-2xl font-semibold leading-tight">{education.school}</h3>
+              <p className="mt-2 text-fg-muted">{education.degree}</p>
+              <div className="mt-auto flex items-center justify-between pt-8 text-sm">
+                <span className="chip !text-fg">{education.period}</span>
+                <span className="text-fg-dim">{education.place}</span>
+              </div>
+              {/* year progress */}
+              <div className="mt-5">
+                <div className="h-1.5 overflow-hidden rounded-full bg-white/[0.06]">
+                  <motion.div
+                    className="h-full rounded-full bg-gradient-to-r from-mint to-iris"
+                    initial={{ width: 0 }}
+                    whileInView={{ width: '62%' }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 1.6, ease: [0.22, 1, 0.36, 1], delay: 0.3 }}
+                  />
+                </div>
+                <p className="mt-2 text-xs text-fg-dim">3rd year · graduating 2028</p>
+              </div>
+            </Spotlight>
+          </Reveal>
 
-            {/* Right - Skill Cards Grid */}
-            <motion.div
-              variants={containerVariants}
-              className="grid grid-cols-2 gap-4"
-            >
-              {skills.map(({ icon: Icon, label, color }, i) => (
-                <motion.div
-                  key={label}
-                  variants={{
-                    hidden: { opacity: 0, scale: 0.8, y: 20 },
-                    visible: {
-                      opacity: 1, scale: 1, y: 0,
-                      transition: { delay: i * 0.1, duration: 0.5, ease: 'easeOut' }
-                    }
-                  }}
-                  whileHover={{ scale: 1.05, y: -5 }}
-                  className="glass-card p-5 group"
-                >
-                  <div className={`w-11 h-11 rounded-xl bg-gradient-to-br ${color} p-2.5 mb-3 group-hover:scale-110 transition-transform duration-300`}>
-                    <Icon className="text-white w-full h-full" />
-                  </div>
-                  <p className="font-semibold text-white text-sm">{label}</p>
-                  <div className={`mt-2 h-0.5 w-0 bg-gradient-to-r ${color} group-hover:w-full transition-all duration-500 rounded-full`} />
-                </motion.div>
-              ))}
-
-              {/* Profile Card */}
-              <motion.div
-                variants={itemVariants}
-                className="col-span-2 glass-card p-5 flex items-center gap-4"
+          {/* Achievements */}
+          <Reveal delay={0.05} className="lg:col-span-12">
+            <Spotlight className="p-7 sm:p-9">
+              <p className="mb-6 flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-fg-dim">
+                <FiAward className="text-ember" /> Highlights
+              </p>
+              <motion.ul
+                variants={stagger}
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true, margin: '-60px' }}
+                className="grid gap-4 sm:grid-cols-2"
               >
-                <div className="w-14 h-14 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-2xl font-bold text-white flex-shrink-0">
-                  ML
-                </div>
-                <div>
-                  <p className="font-bold text-white">Manoj Chandrappa Lamani</p>
-                  <p className="text-gray-400 text-sm">CS @ AIML • Full Stack Dev • ML Enthusiast</p>
-                  <div className="flex gap-2 mt-2">
-                    <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-                    <span className="text-green-400 text-xs font-mono">Open to work</span>
-                  </div>
-                </div>
-              </motion.div>
-            </motion.div>
-          </div>
-        </motion.div>
+                {achievements.map((a) => (
+                  <motion.li key={a} variants={fadeUp} className="flex gap-3 text-[15px] leading-relaxed text-fg-muted">
+                    <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-mint/15 text-mint">
+                      <FiCheck size={12} />
+                    </span>
+                    {a}
+                  </motion.li>
+                ))}
+              </motion.ul>
+            </Spotlight>
+          </Reveal>
+        </div>
       </div>
     </section>
   );
