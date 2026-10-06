@@ -1,78 +1,83 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
-  darkMode: 'class',
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
       colors: {
-        primary: {
-          50: '#eff6ff',
-          100: '#dbeafe',
-          400: '#60a5fa',
-          500: '#3b82f6',
-          600: '#2563eb',
+        ink: {
+          950: '#05060a',
+          900: '#08090e',
+          850: '#0c0e15',
+          800: '#10131c',
+          700: '#171b27',
+          600: '#222738',
+          500: '#2e3448',
         },
-        accent: {
-          purple: '#a855f7',
-          blue: '#3b82f6',
-          cyan: '#06b6d4',
+        fg: {
+          DEFAULT: '#ecedf2',
+          muted: '#9a9db0',
+          dim: '#6b6f84',
         },
-        dark: {
-          900: '#030712',
-          800: '#0a0f1e',
-          700: '#0d1325',
-          600: '#111827',
-          500: '#1f2937',
-          400: '#374151',
-        }
+        mint: {
+          DEFAULT: '#6ef2c4',
+          400: '#8cf5d1',
+          600: '#3fd9a6',
+        },
+        iris: {
+          DEFAULT: '#9b8cff',
+          400: '#b4a9ff',
+          600: '#7a68ff',
+        },
+        ember: '#ffb27a',
       },
       fontFamily: {
+        display: ['"Space Grotesk"', 'Inter', 'system-ui', 'sans-serif'],
         sans: ['Inter', 'system-ui', 'sans-serif'],
-        mono: ['JetBrains Mono', 'monospace'],
-      },
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'hero-gradient': 'linear-gradient(135deg, #030712 0%, #0a0f1e 50%, #0d1325 100%)',
-        'neon-gradient': 'linear-gradient(135deg, #3b82f6, #a855f7)',
-        'card-gradient': 'linear-gradient(135deg, rgba(59,130,246,0.1), rgba(168,85,247,0.05))',
-      },
-      animation: {
-        'float': 'float 6s ease-in-out infinite',
-        'glow': 'glow 2s ease-in-out infinite alternate',
-        'slide-up': 'slideUp 0.8s ease-out',
-        'fade-in': 'fadeIn 1s ease-out',
-        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-        'spin-slow': 'spin 8s linear infinite',
-        'bounce-slow': 'bounce 3s infinite',
+        mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
       },
       keyframes: {
-        float: {
-          '0%, 100%': { transform: 'translateY(0px)' },
-          '50%': { transform: 'translateY(-20px)' },
+        marquee: {
+          from: { transform: 'translateX(0)' },
+          to: { transform: 'translateX(-50%)' },
         },
-        glow: {
-          '0%': { boxShadow: '0 0 20px rgba(59,130,246,0.3)' },
-          '100%': { boxShadow: '0 0 40px rgba(168,85,247,0.6)' },
+        'marquee-reverse': {
+          from: { transform: 'translateX(-50%)' },
+          to: { transform: 'translateX(0)' },
         },
-        slideUp: {
-          '0%': { opacity: '0', transform: 'translateY(30px)' },
-          '100%': { opacity: '1', transform: 'translateY(0)' },
+        orbit: {
+          from: { transform: 'rotate(0deg)' },
+          to: { transform: 'rotate(360deg)' },
         },
-        fadeIn: {
-          '0%': { opacity: '0' },
-          '100%': { opacity: '1' },
+        'orbit-reverse': {
+          from: { transform: 'rotate(360deg)' },
+          to: { transform: 'rotate(0deg)' },
+        },
+        aurora: {
+          '0%, 100%': { transform: 'translate(0, 0) scale(1)' },
+          '33%': { transform: 'translate(6%, -8%) scale(1.15)' },
+          '66%': { transform: 'translate(-6%, 6%) scale(0.92)' },
+        },
+        shimmer: {
+          from: { backgroundPosition: '200% 0' },
+          to: { backgroundPosition: '-200% 0' },
+        },
+        blink: {
+          '0%, 100%': { opacity: '1' },
+          '50%': { opacity: '0' },
         },
       },
-      backdropBlur: {
-        xs: '2px',
-      },
-      screens: {
-        'xs': '480px',
+      animation: {
+        marquee: 'marquee 45s linear infinite',
+        'marquee-reverse': 'marquee-reverse 45s linear infinite',
+        orbit: 'orbit 40s linear infinite',
+        'orbit-slow': 'orbit 70s linear infinite',
+        'orbit-reverse': 'orbit-reverse 40s linear infinite',
+        'orbit-reverse-slow': 'orbit-reverse 70s linear infinite',
+        aurora: 'aurora 22s ease-in-out infinite',
+        shimmer: 'shimmer 6s linear infinite',
+        blink: 'blink 1s step-end infinite',
       },
     },
   },
   plugins: [],
-}
+};
