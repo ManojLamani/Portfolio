@@ -1,41 +1,30 @@
-import { useState, useEffect } from 'react';
+import { MotionConfig } from 'framer-motion';
+import Background from './components/Background';
+import ScrollProgress from './components/ScrollProgress';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
+import TechStack from './components/TechStack';
 import Projects from './components/Projects';
-import Skills from './components/Skills';
+import OpenSource from './components/OpenSource';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
-import CustomCursor from './components/CustomCursor';
-import ScrollProgress from './components/ScrollProgress';
 
-function App() {
-  const [darkMode, setDarkMode] = useState(true);
-
-  useEffect(() => {
-    const html = document.documentElement;
-    if (darkMode) {
-      html.setAttribute('data-theme', 'dark');
-    } else {
-      html.setAttribute('data-theme', 'light');
-    }
-  }, [darkMode]);
-
+export default function App() {
   return (
-    <div data-theme={darkMode ? 'dark' : 'light'} className="app-root min-h-screen">
-      <CustomCursor />
+    <MotionConfig reducedMotion="user">
+      <Background />
       <ScrollProgress />
-      <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />
+      <Navbar />
       <main>
         <Hero />
         <About />
+        <TechStack />
         <Projects />
-        <Skills />
+        <OpenSource />
         <Contact />
       </main>
       <Footer />
-    </div>
+    </MotionConfig>
   );
 }
-
-export default App;
