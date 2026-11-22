@@ -4,13 +4,14 @@ import {
   SiDocker, SiPrisma, SiScikitlearn, SiStreamlit, SiDjango, SiPandas, SiNumpy, SiGit, SiGithub,
   SiPostman, SiMui, SiTailwindcss, SiOpenai, SiHuggingface, SiJupyter, SiKubernetes,
   SiJsonwebtokens, SiNpm, SiVite, SiOpenjdk, SiReactquery, SiPlotly, SiFramer, SiSocketdotio,
-  SiGoogle, SiLangchain,
+  SiGoogle, SiLangchain, SiNextdotjs,
 } from 'react-icons/si';
 import { FiCpu, FiCode, FiLayers, FiDatabase, FiGitBranch, FiBox, FiSmartphone, FiZap, FiTerminal } from 'react-icons/fi';
 
 // [icon, brand colour tuned for a dark background]
 const MAP = {
   React: [SiReact, '#61dafb'],
+  'Next.js': [SiNextdotjs, '#e5e7eb'],
   TypeScript: [SiTypescript, '#3178c6'],
   JavaScript: [SiJavascript, '#f7df1e'],
   'Node.js': [SiNodedotjs, '#5fa04e'],

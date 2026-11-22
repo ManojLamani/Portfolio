@@ -49,7 +49,7 @@ export const skillGroups = [
   {
     title: 'Frontend',
     blurb: 'Interfaces that feel fast',
-    items: ['React', 'Vite', 'Material UI', 'Tailwind CSS', 'React Query', 'Framer Motion', 'Responsive Design'],
+    items: ['React', 'Next.js', 'Vite', 'Material UI', 'Tailwind CSS', 'React Query', 'Framer Motion', 'Responsive Design'],
   },
   {
     title: 'Backend',
@@ -80,7 +80,7 @@ export const skillGroups = [
 
 // Logos for the scrolling marquee
 export const marquee = [
-  'React', 'TypeScript', 'Node.js', 'Python', 'FastAPI', 'PostgreSQL', 'MongoDB', 'Docker',
+  'React', 'Next.js', 'TypeScript', 'Node.js', 'Python', 'FastAPI', 'PostgreSQL', 'MongoDB', 'Docker',
   'scikit-learn', 'Hugging Face', 'LangGraph', 'OpenAI API', 'Google Gemini', 'Express', 'Prisma',
   'Django', 'Kubernetes', 'Go', 'Supabase', 'Firebase', 'Vercel', 'Streamlit', 'Tailwind CSS', 'Git',
 ];
