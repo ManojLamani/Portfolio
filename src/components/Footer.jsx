@@ -27,7 +27,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-10 flex flex-col-reverse items-start justify-between gap-6 border-t border-white/[0.06] pt-6 sm:flex-row sm:items-center">
-          <p className="text-xs text-fg-dim">© {new Date().getFullYear()} Manoj Lamani · Built with React, Tailwind &amp; Framer Motion</p>
+          <p className="text-xs text-fg-dim">© {new Date().getFullYear()} Manoj Lamani · Built with Next.js, Tailwind &amp; Framer Motion</p>
           <div className="flex items-center gap-1">
             {socials.map(({ icon: Icon, href, label }) => (
               <a
